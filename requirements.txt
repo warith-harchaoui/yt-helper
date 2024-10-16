@@ -47,4 +47,3 @@ video-helper @ git+https://github.com/warith-harchaoui/video-helper.git@main
 vidgear==0.3.3
 websockets==13.1
 yt-dlp==2024.10.7
-yt-helper @ git+https://github.com/warith-harchaoui/yt-helper.git@main

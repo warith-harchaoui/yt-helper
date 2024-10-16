@@ -6,7 +6,8 @@
 
 [![logo](logo.png)](https://harchaoui.org/warith/ai-helpers)
 
-YT Helper is a Python library that provides utility functions for downloading videos, audio, and thumbnails from platforms like YouTube, Vimeo, and DailyMotion using `yt-dlp`. It also supports post-processing tasks such as converting or merging media files with `ffmpeg`.
+YT Helper is a Python library that provides utility functions for downloading videos, audio, and thumbnails from platforms like YouTube, Vimeo, and DailyMotion using `yt-dlp`.
+It also supports post-processing tasks such as converting or merging media files with `ffmpeg`.
 
 # Installation
 
@@ -52,7 +53,10 @@ Here’s an example of how to use YT Helper to download a video, extract metadat
 import yt_helper as yth
 import video_helper as vh
 import audio_helper as ah
+import os_helper as osh
 import os
+
+osh.verbosity(0)
 
 # Example YouTube URL
 youtube_url = "https://www.youtube.com/watch?v=YE7VzlLtp-4"
@@ -62,44 +66,39 @@ os.makedirs(folder, exist_ok=True)
 
 # Download a video
 video = "big-buck-bunny.mp4"
-video = os.join(folder, video)
+video = os.path.join(folder, video)
 yth.download_video(youtube_url, video)
 
 # Extract metadata from the video URL
 metadata = yth.video_url_meta_data(youtube_url)
-print(metadata)
+print(metadata["title"])
+# Big Buck Bunny
+
+print(metadata["duration"])
+# 597
+
+print(metadata["description"])
+# Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore! In the typical cartoon tradition he prepares the nasty rodents a comical revenge.
+# 
+# Licensed under the Creative Commons Attribution license
+# 
+# http://www.bigbuckbunny.org/
+
+print(metadata["channel"])
+# Blender
 
 details = vh.video_dimensions(video)
 print(details)
-# {'width': 1920, 'height': 1080, 'duration': 10.0, 'frame_rate': 30.0, 'has_sound': True}
+# {'width': 1280, 'height': 720, 'duration': 596.458, 'frame_rate': 24.0, 'has_sound': True}
 
 # Download the audio from the video
 audio = "big-buck-bunny.mp3"
-audio = os.join(folder, audio)
+audio = os.path.join(folder, audio)
 yth.download_audio(youtube_url, audio)
 
 audio, sample_rate = ah.load_audio(audio)
 print(sample_rate)
-
-```
-
-Another interesting feature is downloading the worst video quality with the best sound quality, perfect for saving bandwidth while maintaining audio quality:
-```python
-import yt_helper as yth
-import video_helper as vh
-
-youtube_url = "https://www.youtube.com/watch?v=YE7VzlLtp-4"
-
-folder = "yt_tests"
-os.makedirs(folder, exist_ok=True)
-
-video = "low_quality_video_with_good_sound.mp4"
-video = os.join(folder, video)
-yth.download_bad_video_with_good_sound(youtube_url, video)
-
-details = vh.video_dimensions(output_video)
-print(details)
-# {'width': 1920, 'height': 1080, 'duration': 10.0, 'frame_rate': 30.0, 'has_sound': True}
+# 44100
 ```
 
 # Features
@@ -107,7 +106,6 @@ print(details)
 - *Audio Downloading*: Download the best available audio from videos.
 - *Thumbnail Downloading*: Extract and save video thumbnails.
 - *Video Metadata*: Retrieve metadata such as title, description, and duration without downloading the entire video.
-- *Post-Processing*: Merge low-quality video with high-quality audio using ffmpeg.
 - *Flexible yt-dlp Options*: Customize download options like format and verbosity using helper functions.
 
 # Authors

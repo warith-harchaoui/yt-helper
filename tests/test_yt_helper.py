@@ -10,7 +10,6 @@ from yt_helper import (
     download_thumbnail,
     download_audio,
     download_video,
-    download_bad_video_with_good_sound,
 )
 
 # Sample YouTube video for testing
@@ -77,13 +76,3 @@ def test_video_url_meta_data():
     assert metadata["title"] != "", "Title should not be empty"
     assert metadata["description"] != "", "Description should not be empty"
 
-# Test for downloading bad video with good sound
-def test_download_bad_video_with_good_sound():
-    output_video_file = get_test_folder(video_filename)
-    download_bad_video_with_good_sound(youtube_url, output_video_file)
-
-    assert vh.is_valid_video_file(output_video_file), "File should be a valid video file"
-    
-    video_dim = vh.video_dimensions(output_video_file)
-    assert video_dim["height"] == 240, "Video should have been converted to 240p"
-    assert video_dim["has_sound"], "Video should have sound"

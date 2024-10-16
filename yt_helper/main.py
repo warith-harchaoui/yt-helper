@@ -365,7 +365,7 @@ def download_video(url: str, output_path: str) -> None:
         if ext.lower() != video_format.lower():
             vh.video_converter(received_file, output_path)
         else:
-            osh.movefile(received_file, output_path)
+            osh.copyfile(received_file, output_path)
 
     # Validate that the video was saved successfully
     osh.checkfile(
@@ -375,87 +375,3 @@ def download_video(url: str, output_path: str) -> None:
 
     osh.info(f"Successfully downloaded video from {url} to {output_path}")
 
-
-def download_bad_video_with_good_sound(
-    url: str, output_path: str, provided_audio_file: str = None
-) -> None:
-    """
-    Download the worst quality video and the best quality audio from a given URL,
-    and combine them into a single output file.
-
-    Parameters
-    ----------
-    url : str
-        The URL of the video to be downloaded.
-    output_path : str
-        The path where the combined video with good sound should be saved.
-    provided_audio_file : str, optional
-        The path to an existing audio file to be used. If not provided, the audio will be downloaded.
-
-    Returns
-    -------
-    None
-
-    Notes
-    -----
-    This function downloads the worst quality video and the best quality audio from
-    the given URL using yt-dlp. It then combines them into a single output file with
-    the desired audio and video using ffmpeg. The function handles audio format conversions
-    if needed and ensures the final file is saved with valid audio and video.
-    """
-    osh.info(f"Downloading (bad image, good sound) video from:\n\t{url} to:\n\t{output_path}")
-    
-    # Extract folder, basename, and format from the output path
-    folder, basename, video_format = osh.folder_name_ext(
-        osh.relative2absolute_path(output_path)
-    )
-    osh.make_directory(folder)
-
-    # Use a temporary folder for intermediate files
-    with osh.temporary_folder() as temp_directory:
-        # Handle the audio file: download if not provided, or validate if provided
-        if osh.emptystring(provided_audio_file):
-            mp3 = osh.os_path_constructor([temp_directory, "audio.mp3"])
-            download_audio(url, mp3)
-            provided_audio_file = mp3
-        else:
-            # Check if the provided audio file is valid
-            osh.check(
-                ah.is_valid_audio_file(provided_audio_file),
-                msg=f"Invalid audio file {provided_audio_file}",
-            )
-            # If the audio is not in mp3 format, convert it to mp3
-            _, _, ext = osh.folder_name_ext(provided_audio_file)
-            if ext.lower() != "mp3":
-                mp3 = osh.os_path_constructor([temp_directory, "audio.mp3"])
-                ah.sound_converter(provided_audio_file, mp3)
-            else:
-                mp3 = provided_audio_file
-            provided_audio_file = mp3
-
-        # Download the worst quality video
-        v = osh.os_path_constructor([temp_directory, "video.mp4"])
-        download_video(url, v)
-
-        # Convert the video to low quality without sound
-        bad_video_without_sound = osh.os_path_constructor([temp_directory, "video_no_sound.mp4"])
-        vh.video_converter(v, bad_video_without_sound, without_sound=True, height=240)
-
-        quiet = osh.verbosity() <= 0
-
-        # Combine the worst video and best audio using ffmpeg
-        i_video = ffmpeg.input(bad_video_without_sound)
-        i_audio = ffmpeg.input(provided_audio_file)
-
-        # Output the combined video and audio to the desired output path
-        ffmpeg.output(
-            i_video, i_audio, output_path, codec="copy", acodec="aac", strict="experimental"
-        ).run(overwrite_output=True, quiet=quiet)
-
-    # Validate the final combined video file
-    osh.check(
-        vh.is_valid_video_file(output_path),
-        msg=f"Failed to save video (bad image, good sound) to {output_path} from {url}",
-    )
-    
-    osh.info(f"Successfully downloaded video (bad image, good sound) from {url} to {output_path}")

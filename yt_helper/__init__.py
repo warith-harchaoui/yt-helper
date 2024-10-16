@@ -27,7 +27,6 @@ __all__ = [
     "download_thumbnail",
     "download_audio",
     "download_video",
-    "download_bad_video_with_good_sound",
 ]
 
 
@@ -38,5 +37,4 @@ from .main import (
     download_thumbnail,
     download_audio,
     download_video,
-    download_bad_video_with_good_sound,
 )

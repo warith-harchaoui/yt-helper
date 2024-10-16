@@ -208,7 +208,7 @@ def download_thumbnail(url: str, output_path: str) -> None:
     osh.make_directory(folder)
 
     # Download the thumbnail to a temporary folder
-    with osh.temp_folder() as temp_directory:
+    with osh.temporary_folder() as temp_directory:
         o = osh.os_path_constructor([temp_directory, basename])
 
         # Set yt-dlp options to download only the thumbnail
@@ -273,7 +273,7 @@ def download_audio(url: str, output_path: str, target_sample_rate: int = 44100) 
     folder, basename, audio_format = osh.folder_name_ext(osh.relative2absolute_path(output_path))
     osh.make_directory(folder)
 
-    with osh.temp_folder() as temp_directory:
+    with osh.temporary_folder() as temp_directory:
         o = osh.os_path_constructor([temp_directory, basename])
 
         # Set yt-dlp options to download the best quality audio
@@ -332,7 +332,7 @@ def download_video(url: str, output_path: str) -> None:
     )
     osh.make_directory(folder)
 
-    with osh.temp_folder() as temp_directory:
+    with osh.temporary_folder() as temp_directory:
         o = osh.os_path_constructor([temp_directory, basename])
 
         # Set yt-dlp options to download the best quality video
@@ -412,7 +412,7 @@ def download_bad_video_with_good_sound(
     osh.make_directory(folder)
 
     # Use a temporary folder for intermediate files
-    with osh.temp_folder() as temp_directory:
+    with osh.temporary_folder() as temp_directory:
         # Handle the audio file: download if not provided, or validate if provided
         if osh.emptystring(provided_audio_file):
             mp3 = osh.os_path_constructor([temp_directory, "audio.mp3"])

@@ -28,9 +28,9 @@ setup(
         "yt-dlp",
         "Pillow",
         "ffmpeg-python",
-        'os-helper @ git+https://github.com/warith-harchaoui/os-helper.git@main'
-        # 'audio-helper @ git+https://github.com/warith-harchaoui/audio-helper.git@main'
-        'video-helper @ git+https://github.com/warith-harchaoui/video-helper.git@main'
+        'os-helper @ git+https://github.com/warith-harchaoui/os-helper.git@main',
+        'audio-helper @ git+https://github.com/warith-harchaoui/audio-helper.git@main',
+        'video-helper @ git+https://github.com/warith-harchaoui/video-helper.git@main',
     ],
     python_requires=">=3.9",
 )

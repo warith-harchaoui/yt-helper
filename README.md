@@ -21,6 +21,7 @@ We recommend using Python environments. Check this link if you're unfamiliar wit
 To install YT Helper, you must install the following dependencies:
 
 - For macOS 🍎
+  
 Get [brew](https://brew.sh) and install the necessary packages:
 ```bash
 brew install yt-dlp

@@ -1,6 +1,11 @@
-audio-helper @ file:///Users/warithharchaoui/audio-helper
+audio-helper @ git+https://github.com/warith-harchaoui/audio-helper.git@main
+Brotli==1.1.0
 certifi==2024.8.30
+cffi==1.17.1
 charset-normalizer==3.4.0
+colorlog==6.8.2
+Cython==3.0.11
+exceptiongroup==1.2.2
 ffmpeg-python==0.2.0
 filelock==3.16.1
 fsspec==2024.9.0
@@ -10,26 +15,36 @@ iniconfig==2.0.0
 Jinja2==3.1.4
 MarkupSafe==3.0.1
 mpmath==1.3.0
-networkx==3.4
+mutagen==1.47.0
+networkx==3.2.1
 numpy==1.26.4
+opencv-python==4.10.0.84
 os-helper @ git+https://github.com/warith-harchaoui/os-helper.git@main
 packaging==24.1
 pandas==1.5.3
+pillow==11.0.0
 pluggy==1.5.0
 psutil==5.9.8
-pytest==8.3.3
+pycparser==2.22
+pycryptodomex==3.21.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 pytz==2024.2
 PyYAML==6.0.2
 requests==2.32.3
-setuptools==75.1.0
+scipy==1.13.1
 six==1.16.0
+soundfile==0.12.1
 sympy==1.13.3
+tomli==2.0.2
 torch==2.4.1
 torchaudio==2.4.1
 tqdm==4.66.5
 typing_extensions==4.12.2
 urllib3==2.2.3
 validators==0.34.0
-wheel==0.44.0
+video-helper @ git+https://github.com/warith-harchaoui/video-helper.git@main
+vidgear==0.3.3
+websockets==13.1
+yt-dlp==2024.10.7
+yt-helper @ git+https://github.com/warith-harchaoui/yt-helper.git@main

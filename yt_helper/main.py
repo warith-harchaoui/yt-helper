@@ -179,7 +179,7 @@ def is_valid_video_url(url: str) -> bool:
     return False
 
 
-def download_thumbnail(url: str, output_path: str=None) -> None:
+def download_thumbnail(url: str, output_path: str=None) -> str:
     """
     Download the thumbnail of a video from a given URL and save it to the specified output path.
 
@@ -192,7 +192,8 @@ def download_thumbnail(url: str, output_path: str=None) -> None:
 
     Returns
     -------
-    None
+    str
+        Path of downloaded thumbnail
 
     Notes
     -----
@@ -256,7 +257,7 @@ def download_thumbnail(url: str, output_path: str=None) -> None:
     return output_path
 
 
-def download_audio(url: str, output_path: str=None, target_sample_rate: int = 44100) -> None:
+def download_audio(url: str, output_path: str=None, target_sample_rate: int = 44100) -> str:
     """
     Download the best quality audio from a given URL and save it to the specified output path.
 
@@ -271,8 +272,9 @@ def download_audio(url: str, output_path: str=None, target_sample_rate: int = 44
 
     Returns
     -------
-    None
-
+    str
+        Path of downloaded audio
+        
     Notes
     -----
     This function uses yt-dlp to download the best quality audio from the given URL. It handles
@@ -324,7 +326,9 @@ def download_audio(url: str, output_path: str=None, target_sample_rate: int = 44
     osh.check(ah.is_valid_audio_file(output_path), msg=f"Failed to save audio to {output_path} for {url}")
     osh.info(f"Audio saved to {output_path}")
 
-def download_video(url: str, output_path: str) -> None:
+    return output_path
+
+def download_video(url: str, output_path: str=None) -> str:
     """
     Download video from a given URL and save it to the specified output path.
 
@@ -332,12 +336,13 @@ def download_video(url: str, output_path: str) -> None:
     ----------
     url : str
         The URL of the video to be downloaded.
-    output_path : str
+    output_path : str, optional
         The path where the downloaded video should be saved.
 
     Returns
     -------
-    None
+    str
+        Path of downloaded video
 
     Notes
     -----
@@ -346,6 +351,18 @@ def download_video(url: str, output_path: str) -> None:
     if necessary. The function checks whether the downloaded video is valid and converts
     it to the specified output format if needed.
     """
+    if osh.emptystring(output_path):
+        metadata = video_url_meta_data(url)
+        title = metadata["title"]
+        basename = osh.asciistring(title)
+        output_path = f"{basename}.mp4"
+        output_path = osh.relative2absolute_path(output_path)
+
+    if osh.file_exists(output_path) and ah.is_valid_video_file(output_path):
+        osh.info(f"Video already exists:\n\t{output_path}")
+        return output_path
+    
+    
     osh.info(f"Downloading video from:\n\t{url} to:\n\t{output_path}")
 
     osh.check(osh.is_working_url(url), msg=f"Invalid video URL:\n\t{url}")
@@ -397,5 +414,7 @@ def download_video(url: str, output_path: str) -> None:
         msg=f"Failed to save video to {output_path} from {url}",
     )
 
-    osh.info(f"Successfully downloaded video from {url} to {output_path}")
+    osh.info(f"Successfully downloaded video from\n\t{url} to\n\t{output_path}")
+
+    return output_path
 

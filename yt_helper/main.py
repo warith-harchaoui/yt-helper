@@ -179,7 +179,7 @@ def is_valid_video_url(url: str) -> bool:
     return False
 
 
-def download_thumbnail(url: str, output_path: str) -> None:
+def download_thumbnail(url: str, output_path: str=None) -> None:
     """
     Download the thumbnail of a video from a given URL and save it to the specified output path.
 
@@ -187,7 +187,7 @@ def download_thumbnail(url: str, output_path: str) -> None:
     ----------
     url : str
         The URL of the video from which to download the thumbnail.
-    output_path : str
+    output_path : str, optional
         The path where the downloaded thumbnail should be saved.
 
     Returns
@@ -199,6 +199,17 @@ def download_thumbnail(url: str, output_path: str) -> None:
     This function uses yt-dlp to download the thumbnail of the specified video. It handles
     different output formats and ensures the thumbnail is saved in the desired format using PIL.
     """
+    if osh.emptystring(output_path):
+        metadata = video_url_meta_data(url)
+        title = metadata["title"]
+        basename = osh.asciistring(title)
+        output_path = f"{basename}.png"
+        output_path = osh.relative2absolute_path(output_path)
+
+    if osh.file_exists(output_path):
+        osh.info(f"Thumbnail already exists:\n\t{output_path}")
+        return output_path
+    
     osh.info(f"Downloading thumbnail of video:\n\t{url} to:\n\t{output_path}")
 
     # Extract folder, basename, and thumbnail format from the output path
@@ -241,9 +252,11 @@ def download_thumbnail(url: str, output_path: str) -> None:
 
     osh.checkfile(output_path, msg=f"Failed to download thumbnail to {output_path} from {url}")
     osh.info(f"Successful download thumbnail to {output_path} from {url}")
+    
+    return output_path
 
 
-def download_audio(url: str, output_path: str, target_sample_rate: int = 44100) -> None:
+def download_audio(url: str, output_path: str=None, target_sample_rate: int = 44100) -> None:
     """
     Download the best quality audio from a given URL and save it to the specified output path.
 
@@ -251,7 +264,7 @@ def download_audio(url: str, output_path: str, target_sample_rate: int = 44100) 
     ----------
     url : str
         The URL of the video to download the audio from.
-    output_path : str
+    output_path : str, optional
         The path where the downloaded audio should be saved.
     target_sample_rate : int, optional
         The sample rate of the output audio file. Defaults to 44100.
@@ -266,6 +279,17 @@ def download_audio(url: str, output_path: str, target_sample_rate: int = 44100) 
     different output formats and ensures the audio is saved with the desired sample rate using a
     conversion step if necessary.
     """
+    if osh.emptystring(output_path):
+        metadata = video_url_meta_data(url)
+        title = metadata["title"]
+        basename = osh.asciistring(title)
+        output_path = f"{basename}.mp3"
+        output_path = osh.relative2absolute_path(output_path)
+
+    if osh.file_exists(output_path) and ah.is_valid_audio_file(output_path):
+        osh.info(f"Thumbnail already exists:\n\t{output_path}")
+        return output_path
+    
     osh.info(f"Downloading audio from:\n\t{url} to:\n\t{output_path}")
     osh.check(osh.is_working_url(url), msg=f"Invalid video URL:\n\t{url}")
 

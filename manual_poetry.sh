@@ -12,7 +12,7 @@ set -e  # Exit the script immediately on any command failure
 PROJECT_NAME="yt-helper"
 
 # Check if pytorch is okay with your python version (Getting Started section of pytorch.org)
-PYTHON_VERSION="3.12"
+PYTHON_VERSION="3.10"
 ENV="env4yth"
 
 DEPENDENCIES="yt-dlp ffmpeg-python git+https://github.com/warith-harchaoui/os-helper.git@main git+https://github.com/warith-harchaoui/audio-helper.git@main git+https://github.com/warith-harchaoui/video-helper.git@main"

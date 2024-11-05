@@ -4,7 +4,7 @@
 
 [🕸️ AI Helpers](https://harchaoui.org/warith/ai-helpers)
 
-[![logo](logo.png)](https://harchaoui.org/warith/ai-helpers)
+[![logo](assets/logo.png)](https://harchaoui.org/warith/ai-helpers)
 
 YT Helper is a Python library that provides utility functions for downloading videos, audio, and thumbnails from platforms like YouTube, Vimeo, and DailyMotion using `yt-dlp`.
 It also supports post-processing tasks such as converting or merging media files with `ffmpeg`.
@@ -42,7 +42,7 @@ sudo apt install ffmpeg
 
 ## Install `YT Helper`:
 ```bash
-pip install --force-reinstall --no-cache-dir git+https://github.com/warith-harchaoui/yt-helper.git@main
+pip install --force-reinstall --no-cache-dir git+https://github.com/warith-harchaoui/yt-helper.gitv1.0.0
 ```
 
 # Usage

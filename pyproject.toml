@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "yt-helper"
-version = "0.1.0"
+version = "1.0.0"
 description = "YT Helper is a Python library that provides utility functions for downloading videos, audio, and thumbnails from platforms like YouTube, Vimeo, and DailyMotion using yt-dlp. It also supports post-processing tasks such as converting or merging media files with ffmpeg."
 authors = ["Warith Harchaoui <warith.harchaoui@gmail.com>, Mohamed Chelali <mohamed.t.chelali@gmail.com>, Bachir Zerroug <bzerroug@gmail.com>"]
 readme = "README.md"

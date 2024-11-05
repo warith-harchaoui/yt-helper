@@ -15,7 +15,7 @@ PROJECT_NAME="yt-helper"
 PYTHON_VERSION="3.10"
 ENV="env4yth"
 
-DEPENDENCIES="yt-dlp ffmpeg-python git+https://github.com/warith-harchaoui/os-helper.git@main git+https://github.com/warith-harchaoui/audio-helper.git@main git+https://github.com/warith-harchaoui/video-helper.git@main"
+DEPENDENCIES="yt-dlp ffmpeg-python git+https://github.com/warith-harchaoui/os-helper.gitv1.0.0 git+https://github.com/warith-harchaoui/audio-helper.gitv1.0.0 git+https://github.com/warith-harchaoui/video-helper.gitv1.0.0"
 DESCRIPTION="YT Helper is a Python library that provides utility functions for downloading videos, audio, and thumbnails from platforms like YouTube, Vimeo, and DailyMotion using yt-dlp. It also supports post-processing tasks such as converting or merging media files with ffmpeg."
 AUTHORS="Warith Harchaoui <warith.harchaoui@gmail.com>, Mohamed Chelali <mohamed.t.chelali@gmail.com>, Bachir Zerroug <bzerroug@gmail.com>"
 
@@ -68,8 +68,8 @@ poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 # pip freeze > requirements.txt
 
-# # replace git commit hash with @main
-sed -i '' 's/@[a-f0-9]\{7,40\}/@main/g' requirements.txt
+# # replace git commit hash with v1.0.0
+sed -i '' 's/@[a-f0-9]\{7,40\}/v1.0.0/g' requirements.txt
 
 # Create environment.yml for conda users (optional)
 cat <<EOL > environment.yml

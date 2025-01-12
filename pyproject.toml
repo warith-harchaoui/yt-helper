@@ -1,15 +1,15 @@
 [tool.poetry]
 name = "yt-helper"
-version = "1.0.0"
+version = "0.1.0"
 description = "YT Helper is a Python library that provides utility functions for downloading videos, audio, and thumbnails from platforms like YouTube, Vimeo, and DailyMotion using yt-dlp. It also supports post-processing tasks such as converting or merging media files with ffmpeg."
 authors = ["Warith Harchaoui <warith.harchaoui@gmail.com>, Mohamed Chelali <mohamed.t.chelali@gmail.com>, Bachir Zerroug <bzerroug@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-yt-dlp = "^2024.10.22"
+python = ">=3.10,<3.13"
+yt-dlp = "^2024.12.23"
 ffmpeg-python = "^0.2.0"
-os-helper = {git = "https://github.com/warith-harchaoui/os-helper.git", rev = "main"}
+os-helper = {git = "https://github.com/warith-harchaoui/os-helper.git", rev = "v1.0.0"}
 audio-helper = {git = "https://github.com/warith-harchaoui/audio-helper.git", rev = "main"}
 video-helper = {git = "https://github.com/warith-harchaoui/video-helper.git", rev = "main"}
 

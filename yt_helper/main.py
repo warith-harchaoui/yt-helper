@@ -28,6 +28,7 @@ import audio_helper as ah
 import video_helper as vh
 from typing import Union
 
+import logging
 
 def default_ytdlp_options(overwrites: bool = True, audio: bool = False, video: bool = False) -> dict:
     """
@@ -53,7 +54,7 @@ def default_ytdlp_options(overwrites: bool = True, audio: bool = False, video: b
     the format is set to download the best audio available. If `video` is set
     to True, it overrides the audio flag and downloads video+audio.
     """
-    verbosity = osh.verbosity()
+    verbosity = 0
     options = {
         "quiet": verbosity == 0,
         "no_warnings": verbosity < 2,
@@ -122,11 +123,11 @@ def video_url_meta_data(url: str) -> dict:
     The function checks for metadata extraction success, logs the title and
     a part of the description, and returns metadata.
     """
-    osh.check(osh.is_working_url(url), msg=f"Invalid URL:\n\t{url}")
+    assert osh.is_working_url(url), f"Invalid URL:\n\t{url}"
 
     res = {}
     meta = _aux_ytdlp_meta_data(url)
-    osh.check(meta is not None, msg=f"yt-dlp is not working on that url:\n{url}")
+    assert meta is not None, f"yt-dlp is not working on that url:\n{url}"
 
     res.update(meta)
     title = meta.get("title")
@@ -137,8 +138,8 @@ def video_url_meta_data(url: str) -> dict:
     t = description.split("\n")
     t = "\n".join(t[:3])
 
-    osh.info(f"Title:\n\t{title}")
-    osh.info(f"Description (beginning):\n\t{t}")
+    logging.info(f"Title:\n\t{title}")
+    logging.info(f"Description (beginning):\n\t{t}")
 
     return res
 
@@ -163,19 +164,19 @@ def is_valid_video_url(url: str) -> bool:
     if the URL points to a valid video.
     """
     if osh.emptystring(url):
-        osh.info("Video url is empty")
+        logging.info("Video url is empty")
         return False
     
     if not(osh.is_working_url(url)):
-        osh.info(f"Video URL is invalid (URL not working):\n\t{url}")
+        logging.info(f"Video URL is invalid (URL not working):\n\t{url}")
         return False
 
     meta = _aux_ytdlp_meta_data(url)
     if meta:
-        osh.info(f"yt-dlp metadata extraction is successful for {url}")
+        logging.info(f"yt-dlp metadata extraction is successful for {url}")
         return True
 
-    osh.info(f"yt-dlp metadata extraction failed for {url}")
+    logging.info(f"yt-dlp metadata extraction failed for {url}")
     return False
 
 
@@ -208,10 +209,10 @@ def download_thumbnail(url: str, output_path: str=None) -> str:
         output_path = osh.relative2absolute_path(output_path)
 
     if osh.file_exists(output_path):
-        osh.info(f"Thumbnail already exists:\n\t{output_path}")
+        logging.info(f"Thumbnail already exists:\n\t{output_path}")
         return output_path
     
-    osh.info(f"Downloading thumbnail of video:\n\t{url} to:\n\t{output_path}")
+    logging.info(f"Downloading thumbnail of video:\n\t{url} to:\n\t{output_path}")
 
     # Extract folder, basename, and thumbnail format from the output path
     folder, basename, thumb_format = osh.folder_name_ext(
@@ -235,7 +236,7 @@ def download_thumbnail(url: str, output_path: str=None) -> str:
 
         # Find the downloaded thumbnail file
         thumb_file = glob.glob(f"{o}.*")
-        osh.check(len(thumb_file) > 0, msg=f"Failed to download thumbnail of video {url}")
+        assert len(thumb_file) > 0, f"Failed to download thumbnail of video {url}"
         thumb_file = osh.relative2absolute_path(thumb_file[0])
 
         # Check if the thumbnail needs to be converted to the desired format
@@ -252,7 +253,7 @@ def download_thumbnail(url: str, output_path: str=None) -> str:
             osh.copyfile(thumb_file, output_path)
 
     osh.checkfile(output_path, msg=f"Failed to download thumbnail to {output_path} from {url}")
-    osh.info(f"Successful download thumbnail to {output_path} from {url}")
+    logging.info(f"Successful download thumbnail to {output_path} from {url}")
     
     return output_path
 
@@ -289,11 +290,11 @@ def download_audio(url: str, output_path: str=None, target_sample_rate: int = 44
         output_path = osh.relative2absolute_path(output_path)
 
     if osh.file_exists(output_path) and ah.is_valid_audio_file(output_path):
-        osh.info(f"Thumbnail already exists:\n\t{output_path}")
+        logging.info(f"Thumbnail already exists:\n\t{output_path}")
         return output_path
     
-    osh.info(f"Downloading audio from:\n\t{url} to:\n\t{output_path}")
-    osh.check(osh.is_working_url(url), msg=f"Invalid video URL:\n\t{url}")
+    logging.info(f"Downloading audio from:\n\t{url} to:\n\t{output_path}")
+    assert osh.is_working_url(url), f"Invalid video URL:\n\t{url}"
 
     # Extract folder, basename, and format from the output path
     folder, basename, audio_format = osh.folder_name_ext(osh.relative2absolute_path(output_path))
@@ -312,9 +313,9 @@ def download_audio(url: str, output_path: str=None, target_sample_rate: int = 44
 
         # Find the downloaded audio file
         received_file = glob.glob(f"{o}.*")
-        osh.check(len(received_file) > 0, msg=f"Failed to download audio from {url}")
+        assert len(received_file) > 0, f"Failed to download audio from {url}"
         received_file = osh.relative2absolute_path(received_file[0])
-        osh.check(ah.is_valid_audio_file(received_file), msg=f"Invalid audio file: {received_file}")
+        assert ah.is_valid_audio_file(received_file), f"Invalid audio file: {received_file}"
 
         # Convert to the desired format if necessary
         _, _, ext = osh.folder_name_ext(received_file)
@@ -323,8 +324,8 @@ def download_audio(url: str, output_path: str=None, target_sample_rate: int = 44
         else:
             osh.copyfile(received_file, output_path)
 
-    osh.check(ah.is_valid_audio_file(output_path), msg=f"Failed to save audio to {output_path} for {url}")
-    osh.info(f"Audio saved to {output_path}")
+    assert ah.is_valid_audio_file(output_path), f"Failed to save audio to {output_path} for {url}"
+    logging.info(f"Audio saved to {output_path}")
 
     return output_path
 
@@ -359,13 +360,13 @@ def download_video(url: str, output_path: str=None) -> str:
         output_path = osh.relative2absolute_path(output_path)
 
     if osh.file_exists(output_path) and ah.is_valid_video_file(output_path):
-        osh.info(f"Video already exists:\n\t{output_path}")
+        logging.info(f"Video already exists:\n\t{output_path}")
         return output_path
     
     
-    osh.info(f"Downloading video from:\n\t{url} to:\n\t{output_path}")
+    logging.info(f"Downloading video from:\n\t{url} to:\n\t{output_path}")
 
-    osh.check(osh.is_working_url(url), msg=f"Invalid video URL:\n\t{url}")
+    assert osh.is_working_url(url), f"Invalid video URL:\n\t{url}"
 
     # Extract folder, basename, and video format from the output path
     folder, basename, video_format = osh.folder_name_ext(
@@ -386,18 +387,12 @@ def download_video(url: str, output_path: str=None) -> str:
 
         # Find the downloaded video file
         received_file = glob.glob(f"{o}.*")
-        osh.check(
-            len(received_file) > 0,
-            msg=f"Failed to download video from {url}",
-        )
+        assert len(received_file) > 0, f"Failed to download video from {url}"
         received_file = received_file[0]
         received_file = osh.relative2absolute_path(received_file)
 
         # Validate the downloaded video file
-        osh.check(
-            vh.is_valid_video_file(received_file),
-            msg=f"Invalid video file downloaded from {url}",
-        )
+        assert vh.is_valid_video_file(received_file), f"Invalid video file downloaded from {url}"
 
         # Extract the extension of the downloaded file
         _, _, ext = osh.folder_name_ext(received_file)
@@ -414,7 +409,7 @@ def download_video(url: str, output_path: str=None) -> str:
         msg=f"Failed to save video to {output_path} from {url}",
     )
 
-    osh.info(f"Successfully downloaded video from\n\t{url} to\n\t{output_path}")
+    logging.info(f"Successfully downloaded video from\n\t{url} to\n\t{output_path}")
 
     return output_path
 

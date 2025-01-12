@@ -359,7 +359,7 @@ def download_video(url: str, output_path: str=None) -> str:
         output_path = f"{basename}.mp4"
         output_path = osh.relative2absolute_path(output_path)
 
-    if osh.file_exists(output_path) and ah.is_valid_video_file(output_path):
+    if osh.file_exists(output_path) and vh.is_valid_video_file(output_path):
         logging.info(f"Video already exists:\n\t{output_path}")
         return output_path
     

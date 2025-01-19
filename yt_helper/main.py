@@ -66,6 +66,27 @@ def default_ytdlp_options(overwrites: bool = True, audio: bool = False, video: b
         "overwrites": overwrites,
     }
 
+    cookies_files = glob.glob("*ytdlp_cookie.txt")
+    osh.remove_files(cookies_files)
+    now = osh.now_string(fmt= "filename")
+    cookie_file = f"{now}_ytdlp_cookie.txt"
+
+    options.update({
+        "cookiefile": cookie_file,
+        "http_headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0",
+            "Accept-Language": "en-US,en;q=0.5",
+        },
+        # "proxy": "http://your.proxy.server:port", # in case we are banned
+        "force_generic_extractor": True,
+    })
+
+    options["extractor_args"] = {
+        "youtube": {
+            "player_skip": ["js"]
+        }
+    }
+
     if audio:
         options["format"] = "bestaudio/best"
 

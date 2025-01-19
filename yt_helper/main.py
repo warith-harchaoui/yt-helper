@@ -222,7 +222,7 @@ def download_thumbnail(url: str, output_path: str=None) -> str:
 
     # Download the thumbnail to a temporary folder
     with osh.temporary_folder() as temp_directory:
-        o = osh.os_path_constructor([temp_directory, basename])
+        o = osh.join(temp_directory, basename)
 
         # Set yt-dlp options to download only the thumbnail
         opts = default_ytdlp_options()
@@ -247,7 +247,7 @@ def download_thumbnail(url: str, output_path: str=None) -> str:
                 img = Image.open(thumb_file)
                 img.save(output_path)
             except Exception as e:
-                osh.error(f"Failed to save thumbnail to {output_path} for {url}: {e}")
+                raise f"Failed to save thumbnail to {output_path} for {url}: {e}"
         else:
             # Move the thumbnail file to the desired output path
             osh.copyfile(thumb_file, output_path)
@@ -301,7 +301,7 @@ def download_audio(url: str, output_path: str=None, target_sample_rate: int = 44
     osh.make_directory(folder)
 
     with osh.temporary_folder() as temp_directory:
-        o = osh.os_path_constructor([temp_directory, basename])
+        o = osh.join(temp_directory, basename)
 
         # Set yt-dlp options to download the best quality audio
         opts = default_ytdlp_options(audio=True)
@@ -375,7 +375,7 @@ def download_video(url: str, output_path: str=None) -> str:
     osh.make_directory(folder)
 
     with osh.temporary_folder() as temp_directory:
-        o = osh.os_path_constructor([temp_directory, basename])
+        o = osh.join([temp_directory, basename])
 
         # Set yt-dlp options to download the best quality video
         opts = default_ytdlp_options(video=True)

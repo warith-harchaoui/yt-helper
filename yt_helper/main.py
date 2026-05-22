@@ -268,7 +268,7 @@ def download_thumbnail(url: str, output_path: str=None) -> str:
                 img = Image.open(thumb_file)
                 img.save(output_path)
             except Exception as e:
-                raise f"Failed to save thumbnail to {output_path} for {url}: {e}"
+                raise RuntimeError(f"Failed to save thumbnail to {output_path} for {url}: {e}") from e
         else:
             # Move the thumbnail file to the desired output path
             osh.copyfile(thumb_file, output_path)

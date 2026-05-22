@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
+from pathlib import Path
+
 from setuptools import setup
+
+long_description = (Path(__file__).parent / 'README.md').read_text(encoding='utf-8')
 
 packages = \
 ['yt_helper']

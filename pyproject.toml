@@ -17,3 +17,9 @@ video-helper = {git = "https://github.com/warith-harchaoui/video-helper.git", re
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: tests that hit live external services (e.g. YouTube). Slow and fragile; skipped by default.",
+]
+addopts = "-m 'not integration'"

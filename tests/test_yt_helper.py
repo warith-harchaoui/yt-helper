@@ -12,6 +12,8 @@ from yt_helper import (
     download_video,
 )
 
+pytestmark = pytest.mark.integration
+
 # Sample YouTube video for testing
 youtube_url = "https://www.youtube.com/watch?v=YE7VzlLtp-4"
 video_filename = "big-buck-bunny.mp4"

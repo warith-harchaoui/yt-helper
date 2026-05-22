@@ -101,6 +101,10 @@ print(sample_rate)
 # 44100
 ```
 
+# Legal and Ethical Use
+
+YT Helper is a thin wrapper around `yt-dlp` and `ffmpeg`. You are responsible for how you use it. Only download or process media that you own, that is in the public domain or under a permissive license (e.g. Creative Commons), or for which you have explicit permission from the rights holder. Respect each platform's Terms of Service and any applicable copyright, privacy, and data-protection laws in your jurisdiction. The authors provide this library for legitimate uses such as personal archiving, accessibility, research, and content you have rights to — not for circumventing access controls or redistributing copyrighted material.
+
 # Features
 - *Video Downloading*: Download videos from platforms like YouTube, Vimeo, and DailyMotion using yt-dlp.
 - *Audio Downloading*: Download the best available audio from videos.

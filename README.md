@@ -42,7 +42,7 @@ sudo apt install ffmpeg
 
 ## Install `YT Helper`:
 ```bash
-pip install --force-reinstall --no-cache-dir git+https://github.com/warith-harchaoui/yt-helper.gitv1.0.0
+pip install --force-reinstall --no-cache-dir git+https://github.com/warith-harchaoui/yt-helper.git@v1.0.0
 ```
 
 # Usage

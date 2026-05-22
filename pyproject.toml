@@ -10,8 +10,8 @@ python = ">=3.10,<3.13"
 yt-dlp = "^2024.12.23"
 ffmpeg-python = "^0.2.0"
 os-helper = {git = "https://github.com/warith-harchaoui/os-helper.git", rev = "v1.0.0"}
-audio-helper = {git = "https://github.com/warith-harchaoui/audio-helper.git", rev = "main"}
-video-helper = {git = "https://github.com/warith-harchaoui/video-helper.git", rev = "main"}
+audio-helper = {git = "https://github.com/warith-harchaoui/audio-helper.git", rev = "v1.0.0"}
+video-helper = {git = "https://github.com/warith-harchaoui/video-helper.git", rev = "v1.0.0"}
 
 
 [build-system]

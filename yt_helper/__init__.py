@@ -27,6 +27,9 @@ __all__ = [
     "download_thumbnail",
     "download_audio",
     "download_video",
+    # Streaming added by Warith Harchaoui — to be PR'd upstream.
+    "resolve_direct_url",
+    "DirectMediaURL",
 ]
 
 
@@ -38,3 +41,4 @@ from .main import (
     download_audio,
     download_video,
 )
+from .streaming import DirectMediaURL, resolve_direct_url

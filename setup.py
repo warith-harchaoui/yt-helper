@@ -20,7 +20,7 @@ install_requires = \
 
 setup_kwargs = {
     'name': 'yt-helper',
-    'version': '0.1.0',
+    'version': '0.2.0',
     'description': 'YT Helper is a Python library that provides utility functions for downloading videos, audio, and thumbnails from platforms like YouTube, Vimeo, and DailyMotion using yt-dlp. It also supports post-processing tasks such as converting or merging media files with ffmpeg.',
     'long_description': long_description,
     'long_description_content_type': 'text/markdown',
@@ -32,7 +32,7 @@ setup_kwargs = {
     'packages': packages,
     'package_data': package_data,
     'install_requires': install_requires,
-    'python_requires': '>=3.10,<3.13',
+    'python_requires': '>=3.10,<3.14',
 }
 
 

@@ -16,11 +16,11 @@ install_requires = \
  'ffmpeg-python>=0.2.0,<0.3.0',
  'os-helper @ git+https://github.com/warith-harchaoui/os-helper.git@v1.1.0',
  'video-helper @ git+https://github.com/warith-harchaoui/video-helper.git@v1.0.0',
- 'yt-dlp>=2024.12.23,<2025.0.0']
+ 'yt-dlp>=2024.12.23']
 
 setup_kwargs = {
     'name': 'yt-helper',
-    'version': '0.2.2',
+    'version': '0.2.3',
     'description': 'YT Helper is a Python library that provides utility functions for downloading videos, audio, and thumbnails from platforms like YouTube, Vimeo, and DailyMotion using yt-dlp. It also supports post-processing tasks such as converting or merging media files with ffmpeg.',
     'long_description': long_description,
     'long_description_content_type': 'text/markdown',

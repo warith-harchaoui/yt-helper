@@ -25,7 +25,7 @@ osh.verbosity(0)
 # Helper function to get the test folder for media (video, audio, thumbnail)
 def get_test_folder(filename: str) -> str:
     folder = "yt_tests"
-    media_file = osh.os_path_constructor([folder, filename])
+    media_file = osh.join([folder, filename])
     if not osh.file_exists(media_file):
         osh.make_directory(folder)
     return media_file

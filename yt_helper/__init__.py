@@ -1,35 +1,56 @@
 """
 YT Helper
 
-This module provides a set of utility functions to download videos, audio, and thumbnails
-from URLs like YouTube, Vimeo, or DailyMotion using yt-dlp, and perform post-processing tasks
-such as converting or merging media files with ffmpeg.
+Utilities for downloading videos, audio, thumbnails, resolving direct
+media URLs, and pulling public engagement metadata — from YouTube, Vimeo,
+DailyMotion, Twitch VOD, and any other site `yt-dlp` supports.
+
+Modules
+-------
+- ``main``       : download helpers (videos / audio / thumbnails) and
+                   metadata extraction.
+- ``streaming``  : URL resolver that turns a user-facing page URL into a
+                   direct media URL (with the right headers / cookies) so
+                   an ffmpeg-based reader can consume it without going
+                   through yt-dlp again. Pure resolution — no PCM
+                   decoding (that's ``podcast_helper``'s job).
+- ``branding``   : no-API engagement helpers (channel info, video lists
+                   with normalised metrics, subtitles, comments). Built
+                   on yt-dlp's public metadata — no Google Data API,
+                   no Vimeo API, no OAuth, no quota.
 
 Dependencies
 - yt-dlp
-- ffmpeg
-- PIL (Python Imaging Library)
-- os_helper (custom utility for OS tasks)
-- audio_helper (custom audio processing utility)
-- video_helper (custom video processing utility)
+- ffmpeg (on PATH)
+- os-helper / audio-helper / video-helper
 
-Authors:
-- Warith Harchaoui, https://harchaoui.org/warith
-- Mohamed Chelali, https://mchelali.github.io
-- Bachir Zerroug, https://www.linkedin.com/in/bachirzerroug
+Author:
+- Warith HARCHAOUI, https://harchaoui.org/warith
 """
 
-# Specify the public API of this module using __all__
 __all__ = [
+    # main — download helpers
     "default_ytdlp_options",
     "video_url_meta_data",
     "is_valid_video_url",
     "download_thumbnail",
     "download_audio",
     "download_video",
-    # Streaming added by Warith Harchaoui — to be PR'd upstream.
+    # streaming — URL resolver + catalog/picker
     "resolve_direct_url",
     "DirectMediaURL",
+    "list_video_streams",
+    "pick_video_stream",
+    "VideoStreamInfo",
+    # branding — engagement / channel helpers (no Data / Analytics API)
+    "channel_info",
+    "channel_videos",
+    "video_engagement",
+    "video_subtitles",
+    "video_comments",
+    "engagement_batch",
+    "is_short",
+    "ensure_recent_ytdlp",
 ]
 
 
@@ -41,4 +62,22 @@ from .main import (
     download_audio,
     download_video,
 )
-from .streaming import DirectMediaURL, resolve_direct_url
+
+from .streaming import (
+    DirectMediaURL,
+    VideoStreamInfo,
+    list_video_streams,
+    pick_video_stream,
+    resolve_direct_url,
+)
+
+from .branding import (
+    channel_info,
+    channel_videos,
+    video_engagement,
+    video_subtitles,
+    video_comments,
+    engagement_batch,
+    is_short,
+    ensure_recent_ytdlp,
+)

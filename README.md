@@ -42,12 +42,16 @@ sudo apt install ffmpeg
 
 ## Install `YT Helper`:
 ```bash
-pip install --force-reinstall --no-cache-dir git+https://github.com/warith-harchaoui/yt-helper.git@v1.0.0
+pip install --force-reinstall --no-cache-dir git+https://github.com/warith-harchaoui/yt-helper.git@v1.1.0
 ```
 
 # Usage
 
-Here’s an example of how to use YT Helper to download a video, extract metadata, and download the audio:
+For the full catalog of recipes (downloads, stream catalog / picker, direct-URL
+resolver, composing with `video-helper`, branding metadata, subtitles &
+comments), see [📋 EXAMPLES.md](EXAMPLES.md).
+
+Quick start — download a video, extract metadata, and download the audio:
 
 ```python
 import yt_helper as yth
@@ -106,13 +110,28 @@ print(sample_rate)
 YT Helper is a thin wrapper around `yt-dlp` and `ffmpeg`. You are responsible for how you use it. Only download or process media that you own, that is in the public domain or under a permissive license (e.g. Creative Commons), or for which you have explicit permission from the rights holder. Respect each platform's Terms of Service and any applicable copyright, privacy, and data-protection laws in your jurisdiction. The authors provide this library for legitimate uses such as personal archiving, accessibility, research, and content you have rights to — not for circumventing access controls or redistributing copyrighted material.
 
 # Features
-- *Video Downloading*: Download videos from platforms like YouTube, Vimeo, and DailyMotion using yt-dlp.
-- *Audio Downloading*: Download the best available audio from videos.
-- *Thumbnail Downloading*: Extract and save video thumbnails.
-- *Video Metadata*: Retrieve metadata such as title, description, and duration without downloading the entire video.
-- *Flexible yt-dlp Options*: Customize download options like format and verbosity using helper functions.
 
-# Authors
- - [Warith Harchaoui](https://harchaoui.org/warith)
- - [Mohamed Chelali](https://mchelali.github.io)
- - [Bachir Zerroug](https://www.linkedin.com/in/bachirzerroug)
+**Downloads (to disk)** — `yt_helper.main`
+- `download_video(url, output_path)` / `download_audio(url, output_path)` / `download_thumbnail(url, output_path)`.
+- `video_url_meta_data(url)` / `is_valid_video_url(url)` for cheap metadata probes.
+- `default_ytdlp_options(verbose, ...)` for customisable yt-dlp options.
+
+**Stream catalog & direct-URL resolution** — `yt_helper.streaming`
+- `resolve_direct_url(url, prefer="audio"|"video")` → quick "give me one direct ffmpeg-ready URL".
+- `list_video_streams(url)` → enumerate every video format yt-dlp finds (codec, resolution, fps, bitrate, …).
+- `pick_video_stream(url, prefer_codec=, prefer_format=, max_fps=, language=, cookies_from_browser=)` → constrained picker, returns one `VideoStreamInfo` ready to feed `video_helper.extract_frames`.
+- Audio stream catalog / picker intentionally lives in **podcast-helper** (single owner for audio PCM streaming).
+
+**No-API engagement metadata** — `yt_helper.branding`
+- `channel_info(url)` / `channel_videos(url, max_videos, include_shorts, include_lives)` — channel snapshot + paginated video list with normalised engagement metrics, cross-platform schema.
+- `video_engagement(url)` / `engagement_batch([urls])` — per-video views / likes / comments / channel follower count, tolerant batched variant.
+- `video_subtitles(url, output_dir, langs=("fr","en"))` — auto-subtitle download.
+- `video_comments(url, max_count, cookies_from_browser="firefox"|"chrome"|...)` — comments sample.
+- `is_short(meta)` / `ensure_recent_ytdlp(min_version)` — helpers.
+- Built on yt-dlp's public metadata only — **no Google Data API, no Vimeo API, no OAuth, no quota.**
+
+# Author
+ - [Warith HARCHAOUI](https://harchaoui.org/warith)
+
+# Acknowledgements
+Special thanks to [Mohamed Chelali](https://mchelali.github.io) and [Bachir Zerroug](https://www.linkedin.com/in/bachirzerroug) for fruitful discussions.

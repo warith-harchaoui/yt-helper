@@ -12,20 +12,20 @@ package_data = \
 {'': ['*']}
 
 install_requires = \
-['audio-helper @ git+https://github.com/warith-harchaoui/audio-helper.git@v1.1.0',
+['audio-helper @ git+https://github.com/warith-harchaoui/audio-helper.git@v1.4.1',
  'ffmpeg-python>=0.2.0,<0.3.0',
- 'os-helper @ git+https://github.com/warith-harchaoui/os-helper.git@v1.1.0',
- 'video-helper @ git+https://github.com/warith-harchaoui/video-helper.git@v1.0.0',
+ 'os-helper @ git+https://github.com/warith-harchaoui/os-helper.git@v1.3.0',
+ 'video-helper @ git+https://github.com/warith-harchaoui/video-helper.git@v1.4.1',
  'yt-dlp>=2024.12.23']
 
 setup_kwargs = {
     'name': 'yt-helper',
-    'version': '0.2.3',
-    'description': 'YT Helper is a Python library that provides utility functions for downloading videos, audio, and thumbnails from platforms like YouTube, Vimeo, and DailyMotion using yt-dlp. It also supports post-processing tasks such as converting or merging media files with ffmpeg.',
+    'version': '1.1.0',
+    'description': 'YT Helper — yt-dlp wrapper for downloading videos / audio / thumbnails, resolving direct media URLs, browsing video stream catalogs, and pulling no-API engagement metadata (channel / video / comments / subtitles) for personal-branding workflows on YouTube, Vimeo, DailyMotion, Twitch VOD, and anywhere yt-dlp supports.',
     'long_description': long_description,
     'long_description_content_type': 'text/markdown',
-    'author': 'Warith Harchaoui',
-    'author_email': 'warith.harchaoui@gmail.com>, Mohamed Chelali <mohamed.t.chelali@gmail.com>, Bachir Zerroug <bzerroug@gmail.com',
+    'author': 'Warith HARCHAOUI',
+    'author_email': 'Warith HARCHAOUI <warithmetics@deraison.ai>',
     'maintainer': 'None',
     'maintainer_email': 'None',
     'url': 'None',

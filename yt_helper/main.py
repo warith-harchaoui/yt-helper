@@ -13,10 +13,8 @@ Dependencies
 - audio_helper (custom audio processing utility)
 - video_helper (custom video processing utility)
 
-Authors:
-- Warith Harchaoui, https://harchaoui.org/warith
-- Mohamed Chelali, https://mchelali.github.io
-- Bachir Zerroug, https://www.linkedin.com/in/bachirzerroug
+Author:
+- Warith HARCHAOUI, https://harchaoui.org/warith
 """
 
 import yt_dlp
